@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI工具集 - AI导航网站</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 顶部导航栏 -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="site-title">AI工具集</h1>
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        v-model="searchKeyword" 
+                        placeholder="搜索AI工具..." 
+                        class="search-input"
+                    >
+                    <span class="search-icon">🔍</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-container">
+            <!-- 左侧边栏 -->
+            <aside class="sidebar">
+                <nav class="category-nav">
+                    <button 
+                        v-for="category in categories" 
+                        :key="category.id"
+                        :class="['category-btn', { active: selectedCategory === category.id }]"
+                        @click="selectCategory(category.id)"
+                    >
+                        <span class="category-icon">{{ category.icon }}</span>
+                        <span class="category-name">{{ category.name }}</span>
+                    </button>
+                </nav>
+            </aside>
+
+            <!-- 右侧主内容区 -->
+            <main class="main-content">
+                <!-- 全部工具模式：按分类分组显示 -->
+                <div v-if="selectedCategory === 'all' && !searchKeyword" class="all-tools-container">
+                    <div 
+                        v-for="category in filteredCategories" 
+                        :key="category.id"
+                        class="category-section"
+                    >
+                        <div class="category-header">
+                            <h2 class="category-title">{{ category.icon }} {{ category.name }}</h2>
+                            <span class="category-tool-count">{{ getCategoryToolCount(category.id) }} 个工具</span>
+                        </div>
+                        <div class="tools-grid">
+                            <a 
+                                v-for="tool in getToolsByCategory(category.id)" 
+                                :key="tool.id"
+                                :href="tool.url"
+                                target="_blank"
+                                class="tool-card"
+                            >
+                                <div class="tool-icon">
+                                    <img :src="tool.icon" :alt="tool.name">
+                                </div>
+                                <div class="tool-info">
+                                    <h3 class="tool-name">{{ tool.name }}</h3>
+                                    <p class="tool-description">{{ tool.description }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 筛选或搜索模式：单一网格显示 -->
+                <div v-else>
+                    <div class="content-header">
+                        <h2 class="category-title">{{ currentCategoryName }}</h2>
+                        <p class="tool-count">共 {{ filteredTools.length }} 个工具</p>
+                    </div>
+
+                    <!-- 工具卡片网格 -->
+                    <div class="tools-grid">
+                        <a 
+                            v-for="tool in filteredTools" 
+                            :key="tool.id"
+                            :href="tool.url"
+                            target="_blank"
+                            class="tool-card"
+                        >
+                            <div class="tool-icon">
+                                <img :src="tool.icon" :alt="tool.name">
+                            </div>
+                            <div class="tool-info">
+                                <h3 class="tool-name">{{ tool.name }}</h3>
+                                <p class="tool-description">{{ tool.description }}</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- 无结果提示 -->
+                    <div v-if="filteredTools.length === 0" class="no-results">
+                        <p>未找到相关工具</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>&copy; 2026 AI工具集. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    categories: [],
+                    tools: [],
+                    selectedCategory: 'all',
+                    searchKeyword: ''
+                }
+            },
+            computed: {
+                currentCategoryName() {
+                    if (this.selectedCategory === 'all') {
+                        return '全部工具';
+                    }
+                    const category = this.categories.find(c => c.id === this.selectedCategory);
+                    return category ? category.name : '全部工具';
+                },
+                filteredCategories() {
+                    // 返回除"全部工具"外的所有分类
+                    return this.categories.filter(c => c.id !== 'all');
+                },
+                filteredTools() {
+                    let tools = this.tools;
+
+                    // 按搜索关键词筛选
+                    if (this.searchKeyword.trim()) {
+                        const keyword = this.searchKeyword.toLowerCase();
+                        tools = tools.filter(tool => 
+                            tool.name.toLowerCase().includes(keyword) ||
+                            tool.description.toLowerCase().includes(keyword)
+                        );
+                    } else if (this.selectedCategory !== 'all') {
+                        // 只在非搜索模式下按分类筛选
+                        tools = tools.filter(tool => tool.categoryId === this.selectedCategory);
+                    }
+
+                    return tools;
+                }
+            },
+            methods: {
+                selectCategory(categoryId) {
+                    this.selectedCategory = categoryId;
+                    // 滚动到顶部
+                    window.scrollTo({ behavior: 'smooth', top: 0 });
+                },
+                getToolsByCategory(categoryId) {
+                    return this.tools.filter(tool => tool.categoryId === categoryId);
+                },
+                getCategoryToolCount(categoryId) {
+                    return this.tools.filter(tool => tool.categoryId === categoryId).length;
+                },
+                loadData() {
+                    fetch('js/data.json')
+                        .then(response => response.json())
+                        .then(data => {
+                            this.categories = data.categories;
+                            this.tools = data.tools;
+                        })
+                        .catch(error => {
+                            console.error('加载数据失败:', error);
+                        });
+                }
+            },
+            mounted() {
+                this.loadData();
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
