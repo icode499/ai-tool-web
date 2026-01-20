@@ -1,0 +1,116 @@
+{
+  "categories": [
+    {
+      "id": "all",
+      "name": "全部工具",
+      "icon": "🌐"
+    },
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "icon": "💬"
+    },
+    {
+      "id": "writing",
+      "name": "AI写作",
+      "icon": "✍️"
+    },
+    {
+      "id": "image",
+      "name": "AI绘画",
+      "icon": "🎨"
+    },
+    {
+      "id": "code",
+      "name": "AI编程",
+      "icon": "💻"
+    },
+    {
+      "id": "video",
+      "name": "AI视频",
+      "icon": "🎬"
+    }
+  ],
+  "tools": [
+    {
+      "id": 1,
+      "name": "ChatGPT",
+      "description": "OpenAI推出的强大对话AI，可以回答问题、写作、编程等",
+      "url": "https://chat.openai.com",
+      "categoryId": "chatgpt",
+      "icon": "icon/ChatGPT_logo.svg"
+    },
+    {
+      "id": 2,
+      "name": "Claude",
+      "description": "Anthropic推出的AI助手，擅长长文本处理和复杂推理",
+      "url": "https://claude.ai",
+      "categoryId": "chatgpt",
+      "icon": "icon/Claude_AI_symbol.svg"
+    },
+    {
+      "id": 3,
+      "name": "文心一言",
+      "description": "百度推出的中文AI对话助手，擅长中文理解和生成",
+      "url": "https://yiyan.baidu.com",
+      "categoryId": "chatgpt",
+      "icon": "https://img.alicdn.com/imgextra/i2/O1CN01T5J5kX1v5g8Q8Z9lY_!!6000000004268-2-tps-512-512.png"
+    },
+    {
+      "id": 4,
+      "name": "Midjourney",
+      "description": "强大的AI图像生成工具，可在Discord中使用",
+      "url": "https://www.midjourney.com",
+      "categoryId": "image",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Midjourney_Logo_2022.svg/512px-Midjourney_Logo_2022.svg.png"
+    },
+    {
+      "id": 5,
+      "name": "Stable Diffusion",
+      "description": "开源的AI图像生成模型，可本地部署使用",
+      "url": "https://stability.ai",
+      "categoryId": "image",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Stable_Diffusion_logo_2022.png"
+    },
+    {
+      "id": 6,
+      "name": "DALL-E 3",
+      "description": "OpenAI的AI图像生成工具，与ChatGPT深度集成",
+      "url": "https://openai.com/dall-e-3",
+      "categoryId": "image",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/2/26/DALL-E_logo.svg"
+    },
+    {
+      "id": 7,
+      "name": "GitHub Copilot",
+      "description": "GitHub推出的AI编程助手，支持多种编程语言",
+      "url": "https://github.com/features/copilot",
+      "categoryId": "code",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/2/29/GitHub_Copilot_logo.svg"
+    },
+    {
+      "id": 8,
+      "name": "Cursor",
+      "description": "AI增强的代码编辑器，提供智能代码补全和修改建议",
+      "url": "https://cursor.sh",
+      "categoryId": "code",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Cursor_logo.png"
+    },
+    {
+      "id": 9,
+      "name": "Notion AI",
+      "description": "集成在Notion中的AI写作助手，帮助提升写作效率",
+      "url": "https://notion.so",
+      "categoryId": "writing",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png"
+    },
+    {
+      "id": 10,
+      "name": "Runway",
+      "description": "专业的AI视频生成和编辑工具，支持文本生成视频",
+      "url": "https://runwayml.com",
+      "categoryId": "video",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Runway_Logo.svg/512px-Runway_Logo.svg.png"
+    }
+  ]
+}
